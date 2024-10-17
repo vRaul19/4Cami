@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formular</title>
     <style>
+        /* Setăm înălțimea completă pentru html și body */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         /* Setăm imaginea de fundal pentru body */
         body {
             background-image: url('https://i0.wp.com/picjumbo.com/wp-content/uploads/free-autumn-background-with-orange-leaves-and-space-for-text-free-image.jpeg?w=2210&quality=70');
@@ -12,8 +19,7 @@
             background-position: center; /* Centrează imaginea */
             background-repeat: no-repeat; /* Previne repetarea imaginii */
             font-family: Arial, sans-serif; /* Setăm un font */
-            margin: 0;
-            padding: 0;
+            min-height: 100vh; /* Asigură că acoperă întreaga înălțime a ferestrei */
         }
 
         /* Stiluri pentru formular */
