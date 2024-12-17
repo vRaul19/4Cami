@@ -3,51 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O întrebare specială</title>
+    <title>O Întrebare Specială</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+        /* Resetare stiluri de bază */
+        body, html {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            height: 100%;
+        }
+
+        body {
             background-image: url('https://i0.wp.com/picjumbo.com/wp-content/uploads/free-autumn-background-with-orange-leaves-and-space-for-text-free-image.jpeg?w=2210&quality=70');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
             color: white;
         }
 
-        h1, h2 {
-            margin-top: 20px;
+        /* Stil pentru textul animat */
+        .hidden-text {
+            opacity: 0;
+            animation: fadeIn 3s forwards;
         }
 
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stil pentru butoane */
         .button {
             background-color: #4CAF50;
             color: white;
             border: none;
             padding: 10px;
+            margin: 10px;
             border-radius: 5px;
             cursor: pointer;
-            margin: 10px auto;
-            display: block;
-            width: 150px;
             font-size: 16px;
+            display: inline-block;
         }
 
         .button:hover {
             background-color: #45a049;
         }
 
-        #surprise {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-            color: red;
-            font-size: 20px;
-        }
-
-        /* Stil formular */
+        /* Stil pentru formular (inițial ascuns) */
         form {
             display: none;
             background-color: rgba(255, 255, 255, 0.9);
@@ -55,7 +62,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             max-width: 400px;
-            margin: 20px auto;
+            margin-top: 20px;
         }
 
         label, input, button {
@@ -64,7 +71,7 @@
             margin-bottom: 10px;
         }
 
-        input, button {
+        input, button[type="submit"] {
             padding: 10px;
             border-radius: 5px;
             border: none;
@@ -79,35 +86,49 @@
         button[type="submit"]:hover {
             background-color: #45a049;
         }
+
+        /* Stil pentru mesajul final */
+        #finalMessage {
+            margin-top: 30px;
+            font-size: 20px;
+            color: #ffdd57;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h1>Bună, Cami! 😊</h1>
-    <h2>Pot să am numărul tău de telefon?</h2>
+    <!-- Mesajele animate care apar treptat -->
+    <h1 class="hidden-text" style="animation-delay: 0s;">Bună, Cami! 😊</h1>
+    <h1 class="hidden-text" style="animation-delay: 2s;">Am încercat să trimit porumbei călători...</h1>
+    <h1 class="hidden-text" style="animation-delay: 4s;">Dar am zis că o pagină personalizată e mai cool. 🕊️</h1>
+    <h1 class="hidden-text" style="animation-delay: 6s;">Pot să am numărul tău de telefon? 📱</h1>
 
-    <!-- Butoanele inițiale -->
-    <button class="button" onclick="showSurprise()">Spune DA</button>
-    <button class="button" onclick="alert('Bine, înțeleg! Totuși, pagina rămâne aici. 😅')">Refuz Politicos</button>
+    <!-- Butoanele pentru răspuns -->
+    <div>
+        <button class="button" onclick="showForm()">Spune DA</button>
+        <button class="button" onclick="alert('Bine, înțeleg! Totuși, pagina rămâne aici pentru tine. 😅')">Refuz Politicos</button>
+    </div>
 
-    <!-- Mesaj de confirmare -->
-    <div id="surprise">Yay! 🎉 Mulțumesc, Cami! Ești cea mai tare! 😊</div>
-
-    <!-- Formular pentru număr -->
+    <!-- Formular pentru numărul de telefon (inițial ascuns) -->
     <form id="numberForm">
         <label for="number">Introduceți numărul tău aici:</label>
         <input type="text" id="number" name="number" placeholder="07xx xxx xxx" required>
         <button type="submit">Trimite</button>
     </form>
 
-    <!-- Script -->
+    <!-- Mesaj final care apare mereu -->
+    <div id="finalMessage">
+        Indiferent de răspuns, această pagină e doar un mic gest pentru cât de specială ești! 🌟
+    </div>
+
+    <!-- Script pentru funcționalitate -->
     <script>
-        // Funcție pentru afișarea mesajului și a formularului
-        function showSurprise() {
-            document.getElementById('surprise').style.display = 'block';
+        // Funcție pentru afișarea formularului
+        function showForm() {
             document.getElementById('numberForm').style.display = 'block';
         }
 
-        // Trimiterea formularului
+        // Trimiterea formularului către scriptul Google
         document.getElementById('numberForm').onsubmit = async (e) => {
             e.preventDefault();
             const number = document.getElementById('number').value;
@@ -123,7 +144,7 @@
 
             const data = await response.json();
 
-            // Afișăm un mesaj de confirmare
+            // Afișează mesajul de confirmare
             alert(data.result);
         };
     </script>
