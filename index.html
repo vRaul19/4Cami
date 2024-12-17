@@ -63,6 +63,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             max-width: 400px;
             margin-top: 20px;
+            color: black;
         }
 
         label, input, button {
@@ -87,6 +88,15 @@
             background-color: #45a049;
         }
 
+        /* Stil pentru mesajul de mulțumire */
+        #thankYouMessage {
+            display: none;
+            font-size: 22px;
+            margin-top: 20px;
+            color: #ffdd57;
+            font-weight: bold;
+        }
+
         /* Stil pentru mesajul final */
         #finalMessage {
             margin-top: 30px;
@@ -105,9 +115,12 @@
 
     <!-- Butoanele pentru răspuns -->
     <div>
-        <button class="button" onclick="showForm()">Spune DA</button>
+        <button class="button" onclick="showThankYouMessage()">Spune DA</button>
         <button class="button" onclick="alert('Bine, înțeleg! Totuși, pagina rămâne aici pentru tine. 😅')">Refuz Politicos</button>
     </div>
+
+    <!-- Mesaj de mulțumire -->
+    <div id="thankYouMessage">Yay! 🎉 Mulțumesc, Cami! Ești cea mai tare! 😊</div>
 
     <!-- Formular pentru numărul de telefon (inițial ascuns) -->
     <form id="numberForm">
@@ -123,9 +136,12 @@
 
     <!-- Script pentru funcționalitate -->
     <script>
-        // Funcție pentru afișarea formularului
-        function showForm() {
-            document.getElementById('numberForm').style.display = 'block';
+        // Funcție pentru afișarea mesajului de mulțumire și formularului
+        function showThankYouMessage() {
+            document.getElementById('thankYouMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('numberForm').style.display = 'block';
+            }, 1000); // Formularul apare după 1 secundă
         }
 
         // Trimiterea formularului către scriptul Google
