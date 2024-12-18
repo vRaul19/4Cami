@@ -156,22 +156,6 @@
         <button type="submit">Trimite</button>
     </form>
 
-    <script>
-        // Funcție pentru a gestiona click-ul pe butonul "DA"
-        function handleYesClick() {
-            // Ascunde textul animat
-            document.getElementById('animatedText').classList.add('hidden');
-            
-            // Afișează mesajul de mulțumire
-            const thankYouMessage = document.getElementById('thankYouMessage');
-            thankYouMessage.style.display = 'block';
-
-            // Afișează formularul după 1 secundă
-            setTimeout(() => {
-                document.getElementById('numberForm').style.display = 'block';
-            }, 1000);
-        }
-
     <!-- Mesaj final care apare mereu -->
     <div id="finalMessage">
         Indiferent de răspuns, această pagină e doar un mic gest pentru cât de specială ești! 🌟
