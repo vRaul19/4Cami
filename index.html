@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O Întrebare Specială</title>
     <style>
+        /* Resetare stiluri de bază */
         body, html {
             margin: 0;
             padding: 0;
@@ -12,7 +13,7 @@
         }
 
         body {
-            background-image: url('https://i0.wp.com/picjumbo.com/wp-content/uploads/free-autumn-background-with-orange-leaves-and-space-for-text-free-image.jpeg?w=2210&quality=70');
+            background-image: url('https://as2.ftcdn.net/v2/jpg/08/53/60/71/1000_F_853607175_OdOQRZf4zIIyHVzvtLjjuj90UI56giym.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -23,8 +24,10 @@
             align-items: center;
             text-align: center;
             color: white;
+            overflow: hidden;
         }
 
+        /* Stil pentru textul animat */
         .hidden-text {
             opacity: 0;
             animation: fadeIn 3s forwards;
@@ -35,6 +38,7 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
+        /* Stil pentru butoane */
         .button {
             background-color: #4CAF50;
             color: white;
@@ -44,12 +48,14 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            display: inline-block;
         }
 
         .button:hover {
             background-color: #45a049;
         }
 
+        /* Stil pentru formular (inițial ascuns) */
         form {
             display: none;
             background-color: rgba(255, 255, 255, 0.9);
@@ -83,60 +89,146 @@
             background-color: #45a049;
         }
 
+        /* Stil pentru mesajul de mulțumire */
         #thankYouMessage {
             display: none;
             font-size: 22px;
             margin-top: 20px;
             color: #ffdd57;
             font-weight: bold;
+            animation: bounce 2s;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Stil pentru mesajul final */
+        #finalMessage {
+            margin-top: 30px;
+            font-size: 20px;
+            color: #ffdd57;
+            font-weight: bold;
+        }
+
+        /* Stil pentru emoji-urile plutitoare */
+        .floating-emoji {
+            position: absolute;
+            font-size: 30px;
+            animation: floatUp 5s infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
+    <!-- Mesajele animate care apar treptat -->
     <h1 class="hidden-text" style="animation-delay: 0s;">Bună, Cami! 😊</h1>
-    <h1 class="hidden-text" style="animation-delay: 2s;">Am încercat să trimit porumbei călători...</h1>
-    <h1 class="hidden-text" style="animation-delay: 4s;">Dar am zis că o pagină personalizată e mai cool. 🕊️</h1>
+    <h1 class="hidden-text" style="animation-delay: 2s;">Am încercat să trimit porumbei călători... 🕊️</h1>
+    <h1 class="hidden-text" style="animation-delay: 4s;">Dar am zis că o pagină personalizată e mai cool.😎</h1>
     <h1 class="hidden-text" style="animation-delay: 6s;">Pot să am numărul tău de telefon? 📱</h1>
 
-    <div>
-        <button class="button" onclick="showThankYouMessage()">Spune DA</button>
-        <button class="button" onclick="alert('Bine, înțeleg! Totuși, pagina rămâne aici pentru tine. 😅')">Refuz Politicos</button>
+    <!-- Butoanele pentru răspuns -->
+    <div class="button-container" style="display: none;">
+        <button class="button" onclick="launchConfetti()">Spune DA</button>
+        <button class="button" onclick="politeRefusal()">Refuz Politicos</button>
     </div>
 
+    <!-- Mesaj de mulțumire -->
     <div id="thankYouMessage">Yay! 🎉 Mulțumesc, Cami! Ești cea mai tare! 😊</div>
 
+    <!-- Formular pentru numărul de telefon (inițial ascuns) -->
     <form id="numberForm">
         <label for="number">Introduceți numărul tău aici:</label>
         <input type="text" id="number" name="number" placeholder="07xx xxx xxx" required>
         <button type="submit">Trimite</button>
     </form>
 
-    <script>
-        function showThankYouMessage() {
-            const hiddenTexts = document.querySelectorAll('.hidden-text');
-            hiddenTexts.forEach(text => {
-                text.style.display = 'none'; // Ascundem mesajele animate
-            });
+    <!-- Mesaj final care apare mereu -->
+    <div id="finalMessage">
+        Indiferent de răspuns, această pagină e doar un mic gest pentru cât de specială ești! 🌟
+    </div>
+    
+     <!-- Sunete pentru butoane -->
+    <audio id="positiveSound" src="https://www.soundjay.com/button/sounds/button-3.mp3"></audio>
+    <audio id="negativeSound" src="https://www.soundjay.com/button/sounds/button-5.mp3"></audio>
 
+    <!-- Script pentru funcționalitate -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
+    <script>
+        // Afișează butoanele după ultima animație
+        setTimeout(() => document.querySelector('.button-container').style.display = 'block', 8000);
+
+        // Funcție pentru afișarea mesajului de mulțumire și formularului
+        function launchConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            document.getElementById('positiveSound').play();
             document.getElementById('thankYouMessage').style.display = 'block';
             setTimeout(() => {
                 document.getElementById('numberForm').style.display = 'block';
             }, 1000); // Formularul apare după 1 secundă
         }
 
+        // Funcție pentru refuz politicos cu mesaje aleatorii
+        function politeRefusal() {
+            document.getElementById('negativeSound').play();
+            const messages = [
+                "Bine, înțeleg! Totuși, sunt răbdător. 😅",
+                "Măcar ți-a plăcut pagina, nu? 🥺",
+                "Ouch, direct la refuz! 😆",
+                "Ok, mă retrag... dar nu renunț! 😎"
+            ];
+            alert(messages[Math.floor(Math.random() * messages.length)]);
+        }
+
+        // Trimiterea formularului către scriptul Google
         document.getElementById('numberForm').onsubmit = async (e) => {
             e.preventDefault();
             const number = document.getElementById('number').value;
 
+            // Trimitere la scriptul Google Apps
             const response = await fetch('https://script.google.com/macros/s/AKfycbzfbz819zsgiJNt6c0VOePGDRjlm8soqEmyrn_6_aADBGtUAMfJfjTrcrQPLfMk36_gcg/exec', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
                 body: `number=${number}`
             });
 
             const data = await response.json();
+
+            // Afișează mesajul de confirmare
             alert(data.result);
         };
+
+        // Creează emoji-uri plutitoare
+        function createFloatingEmoji() {
+            const emoji = document.createElement('div');
+            emoji.innerText = ['❤️', '🕊️', '🎉'][Math.floor(Math.random() * 3)];
+            emoji.classList.add('floating-emoji');
+            emoji.style.left = Math.random() * 100 + 'vw';
+            emoji.style.animationDuration = Math.random() * 3 + 3 + 's';
+            document.body.appendChild(emoji);
+            setTimeout(() => emoji.remove(), 5000);
+        }
+
+        setInterval(createFloatingEmoji, 500);
     </script>
 </body>
 </html>
